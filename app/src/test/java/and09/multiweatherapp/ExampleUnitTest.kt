@@ -17,20 +17,6 @@ import kotlin.jvm.Throws
  */
 class ExampleUnitTest {
 
-    /*
-    @Test
-    @Throws(IOException::class, JSONException::class)
-    fun openWeatherMap_getResponseFromName() {
-        val api = OpenWeatherMapAPI.fromLocationName("San Francisco")
-    }
-
-    @Test
-    @Throws(IOException::class, JSONException::class)
-    fun openWeatherMap_getResponseFromLatLon() {
-        val api = OpenWeatherMapAPI.fromLatLon(37.77, -122.42)
-    }
-
-     */
 
     //Open Weather
     @Test

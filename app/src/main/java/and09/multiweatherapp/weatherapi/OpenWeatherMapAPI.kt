@@ -7,6 +7,7 @@ import java.io.IOException
 import java.net.URLEncoder
 import kotlin.jvm.Throws
 
+
 class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
 
     private val weatherdata: JSONObject
@@ -15,6 +16,7 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
         private const val API_KEY = "3af8dd38306b05b4d3d04f886736f2ca"
         private const val BASE_URL = "https://api.openweathermap.org/data/2.5/weather?lang=de&APPID=$API_KEY&"
 
+        @FromLocationName
         @Throws(IOException::class, JSONException::class)
         fun fromLocationName(locationName: String?): WeatherAPI {
             return OpenWeatherMapAPI("q=" + URLEncoder.encode( locationName, "UTF-8"))

@@ -5,10 +5,10 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/textview_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textview_location"
-        android:text="Standort"
+        android:text="Es liegen noch keine Daten vor"
         android:textSize="20dp" />
 
     <ImageView
@@ -16,7 +16,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_below="@id/textview_location"
-        android:src="@drawable/icon" />
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,23 +26,25 @@
         android:layout_toRightOf="@id/imageview_weathericon"
         android:layout_marginLeft="6dp"
         android:textSize="26dp"
-        android:text="20°"
+        android:text=""
         android:textStyle="bold"/>
+
     <TextView
+        android:id="@+id/textview_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textview_description"
-        android:layout_toRightOf="@id/imageview_weathericon"
         android:layout_below="@id/textview_temperature"
         android:layout_marginLeft="6dp"
-        android:text="Sonnig"
-        android:textSize="16dp"/>
+        android:layout_toRightOf="@id/imageview_weathericon"
+        android:text=""
+        android:textSize="16dp" />
+
     <TextView
+        android:id="@+id/textview_provider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textview_provider"
         android:layout_below="@id/imageview_weathericon"
         android:layout_marginTop="6dp"
-        android:text="https://www.openweathermap.com"
-        android:textSize="9dp"/>
+        android:text=""
+        android:textSize="9dp" />
 </RelativeLayout>

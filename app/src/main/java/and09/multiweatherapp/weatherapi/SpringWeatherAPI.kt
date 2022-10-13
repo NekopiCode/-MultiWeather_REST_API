@@ -10,7 +10,8 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI {
     private val weatherdata: JSONObject
     companion object {
         private const val BASE_URL = "http://localhost:8080/weather?"
-        
+
+        @FromLocationName
         @Throws(IOException::class, JSONException::class)
         fun fromLocationName(locationName: String?): WeatherAPI
         {

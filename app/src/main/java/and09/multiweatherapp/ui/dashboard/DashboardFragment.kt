@@ -1,15 +1,26 @@
 package and09.multiweatherapp.ui.dashboard
 
+
+import and09.multiweatherapp.R
+import and09.multiweatherapp.databinding.FragmentDashboardBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import and09.multiweatherapp.databinding.FragmentDashboardBinding
+import androidx.preference.PreferenceFragmentCompat
 
-class DashboardFragment : Fragment() {
+
+class DashboardFragment : PreferenceFragmentCompat() {
+
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        // Load the preferences from an XML resource
+        setPreferencesFromResource(R.xml.preferences, rootKey)
+    }
+}
+    /*
 
     private var _binding: FragmentDashboardBinding? = null
 
@@ -22,10 +33,10 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
+        val dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = PreferenceFragmentCompat
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
@@ -39,4 +50,8 @@ class DashboardFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    
+
 }
+
+     */

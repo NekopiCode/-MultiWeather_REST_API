@@ -8,8 +8,16 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import and09.multiweatherapp.databinding.ActivityMainBinding
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 
 class MainActivity : AppCompatActivity() {
+
+    val prefsChangedListener = object: SharedPreferences.OnSharedPreferenceChangeListener {
+        override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
+            println("prefs changed, key: $key")
+        }
+    }
 
     private lateinit var binding: ActivityMainBinding
 
@@ -31,5 +39,8 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        prefs.registerOnSharedPreferenceChangeListener(prefsChangedListener)
     }
 }
