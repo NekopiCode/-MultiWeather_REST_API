@@ -5,6 +5,10 @@
     <string name="title_notifications">Notifications</string>
     <string name="location_name">location_name</string>
     <string name="weather_provider">weather_provider</string>
+
+    <string name="pref_Title_IP_Input">IP Adresse für Spring API</string>
+    <string name="pref_Key_IP_Input">pref_Key_IP_Input</string>
+
     <string-array name="provider_names">
         <item>OpenWeatherMap</item>
         <item>WeatherStack</item>

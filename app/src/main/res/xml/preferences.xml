@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         android:title="Allgemeine Einstellungen"
         app:iconSpaceReserved="false">
         <CheckBoxPreference
-            android:title = "Automatische Standortbestimmung"
-            android:key = "use_gps"
+            android:title="Automatische Standortbestimmung"
+            android:key="use_gps"
             android:defaultValue="false"
             app:iconSpaceReserved="false"/>
 
         <EditTextPreference
-            android:title = "Manuelle Standorteingabe"
+            android:title="Manuelle Standorteingabe"
             android:key="location_name"
             app:iconSpaceReserved="false"/>
 
@@ -23,6 +23,12 @@
             android:entries="@array/provider_names"
             android:entryValues="@array/class_names"
             app:iconSpaceReserved="false"/>
+
+        <EditTextPreference
+            android:title="@string/pref_Title_IP_Input"
+            android:key="@string/pref_Key_IP_Input"
+            app:iconSpaceReserved="false"/>
+
     </PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

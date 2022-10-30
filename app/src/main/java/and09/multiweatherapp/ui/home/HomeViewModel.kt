@@ -3,6 +3,8 @@ package and09.multiweatherapp.ui.home
 import and09.multiweatherapp.R
 import and09.multiweatherapp.weatherapi.*
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
@@ -46,12 +48,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         MutableLiveData<String>()
     }
 
-
     val location: LiveData<String> = _location
     val temperature: LiveData<String> = _temperature
     val description: LiveData<String> = _description
     val provider: LiveData<String> = _provider
     val iconBitmap: LiveData<Bitmap> = _iconBitmap
+
 
 
     fun retrieveWeatherData() {
@@ -63,7 +65,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 val app = getApplication() as Application
                 val prefs = PreferenceManager.getDefaultSharedPreferences(app)
                 val locationName = prefs.getString(app.getString(R.string.location_name), "Augsburg")?.trim()
-                val providerClassName = prefs.getString(app.getString(R.string.weather_provider), "${OpenWeatherMapAPI}")
+                val providerClassName = prefs.getString(app.getString(R.string.weather_provider), "${provider}")
+                val ipInput = prefs.getString("pref_Key_IP_Input", "")?.trim()
+
+
                 //val providerClassName = Class.forName("${WeatherAPI::providerUrl}")
                 try {
                     val cls = Class.forName("${WeatherAPI::class.java.`package`?.name}.$providerClassName").kotlin
@@ -74,7 +79,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                     Log.d(javaClass.simpleName, "Temp: ${weather?.temperature}")
                     Log.d(javaClass.simpleName, "Description:${weather?.description}")
                     Log.d(javaClass.simpleName, "Icon-URL: ${weather?.iconUrl}")
-                    Log.d(javaClass.simpleName, "Provider:${weather?.providerUrl}")
+                    Log.d(javaClass.simpleName, "Provider: ${weather?.providerUrl}")
+                    Log.d("LogLocation", "Location: ${weather?.location}")
+                    Log.d("LogIPHomeView", "$ipInput")
 
                     val iconUrl = URL(weather?.iconUrl) // java.net!
                     val inputStream = iconUrl.openStream()
@@ -91,7 +98,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
             }
-            if (weather != null) updateValues(weather, bitmap)
+            if (weather != null)
+                updateValues(weather, bitmap)
             else Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show()
         }
 

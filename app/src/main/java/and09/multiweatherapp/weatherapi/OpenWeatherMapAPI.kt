@@ -28,6 +28,7 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
         }
     }
 
+
     @get:Throws(JSONException::class)
     override val temperature: Int
         get() {
@@ -55,6 +56,9 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
         get() {
             return weatherdata.getString("name")
         }
+
+
+
 
     override val providerUrl: String
         get() = "https://www.openweathermap.org"

@@ -8,7 +8,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import and09.multiweatherapp.databinding.ActivityMainBinding
+import and09.multiweatherapp.weatherapi.SpringWeatherAPI
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.preference.PreferenceManager
 
 class MainActivity : AppCompatActivity() {
@@ -37,10 +39,18 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         prefs.registerOnSharedPreferenceChangeListener(prefsChangedListener)
+        val getString = prefs.getString("pref_Key_IP_Input", "")?.trim()
+        Log.d("LogIP_Main", "$getString")
+
+        SpringWeatherAPI.appContext(this)
+
+
     }
+
 }

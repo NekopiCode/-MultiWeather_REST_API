@@ -5,6 +5,7 @@ import org.json.JSONException
 annotation class FromLocationName
 
 interface WeatherAPI {
+
     @get:Throws(JSONException::class)
     val temperature: Int
 
@@ -17,5 +18,10 @@ interface WeatherAPI {
     @get:Throws(JSONException::class)
     val location: String
 
+    @get:Throws(JSONException::class)
     val providerUrl: String
+
+
+
+
 }

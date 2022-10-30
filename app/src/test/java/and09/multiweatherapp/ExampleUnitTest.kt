@@ -52,6 +52,11 @@ class ExampleUnitTest {
         val api = WeatherStackAPI.fromLatLon(48.366512, 10.894446)
     }
 
+    @Test
+    @Throws(IOException::class, JSONException::class)
+    fun providerTest() {
+        val provider = ""
+    }
 
     //Spring Weather Api
     @Test

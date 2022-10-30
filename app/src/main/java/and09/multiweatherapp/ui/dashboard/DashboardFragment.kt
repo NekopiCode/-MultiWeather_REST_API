@@ -2,13 +2,11 @@ package and09.multiweatherapp.ui.dashboard
 
 
 import and09.multiweatherapp.R
-import and09.multiweatherapp.databinding.FragmentDashboardBinding
+import and09.multiweatherapp.weatherapi.SpringWeatherAPI
+import android.content.Context
+//import and09.multiweatherapp.databinding.FragmentDashboardBinding
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 
 
@@ -18,8 +16,11 @@ class DashboardFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         // Load the preferences from an XML resource
         setPreferencesFromResource(R.xml.preferences, rootKey)
+
     }
+
 }
+
     /*
 
     private var _binding: FragmentDashboardBinding? = null
@@ -45,13 +46,10 @@ class DashboardFragment : PreferenceFragmentCompat() {
         }
         return root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    
 
 }
-
      */
