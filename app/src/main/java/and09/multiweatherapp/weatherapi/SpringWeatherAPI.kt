@@ -35,12 +35,21 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI, App
 
         private lateinit var context: Context
 
-        fun appContext(con: Context){
-            context = con
+        fun appContext(myContext: Context){
+            context = myContext
         }
 
 
         private var BASE_URL = ""
+
+
+        fun setServerAddress() {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val getIP = prefs.getString("pref_Key_IP_Input", "")?.trim()
+            BASE_URL = "http://$getIP:8080/weather?"
+
+            Log.d("Spring_Log", "WebAPI is: $getIP")
+        }
 
 
         @FromLocationName
@@ -51,19 +60,12 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI, App
         }
 
 
+
         @Throws(IOException::class, JSONException::class)
         fun fromLatLon(lat: Double, lon: Double): WeatherAPI {
             return SpringWeatherAPI("query=$lat,$lon")
         }
 
-
-        fun setServerAddress() {
-            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            val getIP = prefs.getString("pref_Key_IP_Input", "")?.trim()
-            BASE_URL = "http://$getIP:8080/weather?"
-
-            Log.d("Spring_Log", "WebAPI is: $getIP")
-        }
     }
 
 

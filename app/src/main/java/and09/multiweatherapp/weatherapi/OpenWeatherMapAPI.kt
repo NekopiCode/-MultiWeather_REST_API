@@ -1,6 +1,7 @@
 package and09.multiweatherapp.weatherapi
 
 import and09.multiweatherapp.HttpRequest
+import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -19,8 +20,11 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
         @FromLocationName
         @Throws(IOException::class, JSONException::class)
         fun fromLocationName(locationName: String?): WeatherAPI {
-            return OpenWeatherMapAPI("q=" + URLEncoder.encode( locationName, "UTF-8"))
+            //return OpenWeatherMapAPI("q=" + URLEncoder.encode( locationName, "UTF-8"))
+            return OpenWeatherMapAPI("q=" +  locationName)
         }
+
+
 
         @Throws(IOException::class, JSONException::class)
         fun fromLatLon(lat: Double, lon: Double): WeatherAPI {
@@ -58,14 +62,13 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
         }
 
 
-
-
     override val providerUrl: String
         get() = "https://www.openweathermap.org"
 
     init {
         val result = HttpRequest.request(BASE_URL + queryString)
         weatherdata = JSONObject(result)
+        //Log.d("Log Weather API:", "${weatherdata}")
         println(weatherdata.toString()) //Debug!
     }
 

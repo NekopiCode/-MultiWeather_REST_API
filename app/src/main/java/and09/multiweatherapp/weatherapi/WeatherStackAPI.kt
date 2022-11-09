@@ -19,8 +19,10 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
         @FromLocationName
         @Throws(IOException::class, JSONException::class)
         fun fromLocationName(locationName: String?): WeatherAPI {
-            return WeatherStackAPI("query=" + URLEncoder.encode(locationName, "UTF-8"))
+            return WeatherStackAPI("query=" + locationName)
         }
+
+
         @Throws(IOException::class, JSONException::class)
         fun fromLatLon(lat: Double, lon: Double): WeatherAPI {
             return WeatherStackAPI("query=$lat,$lon")
@@ -46,6 +48,7 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
             val icons = weatherdata.getJSONObject("current").getJSONArray("weather _icons")
             return icons[0] as String
         }
+
     @get:Throws(JSONException::class)
     override val location: String
         get() {

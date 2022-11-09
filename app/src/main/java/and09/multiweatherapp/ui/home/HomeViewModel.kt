@@ -1,10 +1,9 @@
 package and09.multiweatherapp.ui.home
 
+
 import and09.multiweatherapp.R
 import and09.multiweatherapp.weatherapi.*
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
@@ -12,7 +11,6 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.*
 import org.json.JSONException
@@ -64,16 +62,33 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             withContext(Dispatchers.IO) {
                 val app = getApplication() as Application
                 val prefs = PreferenceManager.getDefaultSharedPreferences(app)
-                val locationName = prefs.getString(app.getString(R.string.location_name), "Augsburg")?.trim()
-                val providerClassName = prefs.getString(app.getString(R.string.weather_provider), "${provider}")
+                val locationName: String? = prefs.getString(app.getString(R.string.location_name), "Augsburg")?.trim()
+                val providerClassName = prefs.getString("weather_provider", "$provider")?.trim()
                 val ipInput = prefs.getString("pref_Key_IP_Input", "")?.trim()
+                val useGPS_Status = prefs.getBoolean("use_gps", false)
 
-
-                //val providerClassName = Class.forName("${WeatherAPI::providerUrl}")
+                //Einsendeaufgabe Nummer 4
+                val test_lat = 53.4708393
+                val test_lon = 7.4848308
+                var apiStringBuilder: String = when(providerClassName){
+                    "WeatherStackAPI" -> "$test_lat,$test_lon"
+                    "OpenWeatherMapAPI" -> "&lat=$test_lat&lon=$test_lon"
+                    else -> {
+                        ""
+                    }
+                }
+                val locationName_or_gps_chooser = when(useGPS_Status){
+                    true -> "$locationName"
+                    false -> apiStringBuilder
+                }
+                //Log - Just for testing
+                Log.d("Log API Stringbuilder:", "$apiStringBuilder")
+                Log.d("Log Provider:", "$providerClassName")
+                Log.d("Log use_gps Status:", "$useGPS_Status")
                 try {
                     val cls = Class.forName("${WeatherAPI::class.java.`package`?.name}.$providerClassName").kotlin
                     val func = cls.companionObject?.declaredFunctions?.find { it.hasAnnotation<FromLocationName>() }
-                    weather = func?.call(cls.companionObjectInstance, locationName) as WeatherAPI
+                    weather = func?.call(cls.companionObjectInstance, locationName_or_gps_chooser ) as WeatherAPI
 
                     Log.d(javaClass.simpleName, "Temp: ${weather?.temperature}")
                     Log.d(javaClass.simpleName, "Temp: ${weather?.temperature}")
@@ -104,6 +119,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         }
 
     }
+
 
     fun updateValues(weather: WeatherAPI?, bitmap: Bitmap?) {
         try {

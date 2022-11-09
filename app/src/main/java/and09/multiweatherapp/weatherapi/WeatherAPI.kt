@@ -4,6 +4,7 @@ import org.json.JSONException
 
 annotation class FromLocationName
 
+
 interface WeatherAPI {
 
     @get:Throws(JSONException::class)

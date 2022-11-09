@@ -9,6 +9,7 @@
             android:title="Automatische Standortbestimmung"
             android:key="use_gps"
             android:defaultValue="false"
+            android:enabled="true"
             app:iconSpaceReserved="false"/>
 
         <EditTextPreference
