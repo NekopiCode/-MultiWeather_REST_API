@@ -1,6 +1,7 @@
 package and09.multiweatherapp.weatherapi
 
 import and09.multiweatherapp.HttpRequest
+import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -39,13 +40,13 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
     override val description: String
         get() {
             val descriptions =
-                weatherdata.getJSONObject("current").getJSONArray("weather _descriptions")
+                weatherdata.getJSONObject("current").getJSONArray("weather_descriptions")
             return descriptions[0] as String
         }
     @get:Throws(JSONException::class)
     override val iconUrl: String
         get() {
-            val icons = weatherdata.getJSONObject("current").getJSONArray("weather _icons")
+            val icons = weatherdata.getJSONObject("current").getJSONArray("weather_icons")
             return icons[0] as String
         }
 
@@ -59,10 +60,11 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
     override val providerUrl: String
         get() = "https://www.weatherstack.com"
 
+
     init {
         val result = HttpRequest.request(BASE_URL + queryString)
         weatherdata = JSONObject(result)
+        Log.d("Log Result", BASE_URL + queryString)
         println(weatherdata.toString())
-        if (weatherdata.has("success") && weatherdata.getBoolean("success") == false) throw FileNotFoundException()
     }
 }

@@ -1,20 +1,30 @@
 package and09.multiweatherapp.ui.home
 
+import and09.multiweatherapp.MainActivity
 import and09.multiweatherapp.R
+import and09.multiweatherapp.databinding.FragmentHomeBinding
+import android.app.PendingIntent.getActivity
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import and09.multiweatherapp.databinding.FragmentHomeBinding
-import and09.multiweatherapp.weatherapi.SpringWeatherAPI
-import android.app.Application
-import android.widget.ImageView
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
+import kotlinx.coroutines.Dispatchers.Main
+
 
 class HomeFragment : Fragment() {
+
+
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -22,7 +32,9 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(
+
+
+        override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?): View {
@@ -70,6 +82,11 @@ class HomeFragment : Fragment() {
         homeViewModel.retrieveWeatherData()
         return root
     }
+
+
+
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
