@@ -67,7 +67,7 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
 
     init {
         val result = HttpRequest.request(BASE_URL + queryString)
-        Log.d("Log Result", BASE_URL + queryString)
+        Log.d("LogResult", BASE_URL + queryString)
         weatherdata = JSONObject(result)
         //Log.d("Log Weather API:", "${weatherdata}")
         println(weatherdata.toString()) //Debug!

@@ -64,7 +64,8 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
     init {
         val result = HttpRequest.request(BASE_URL + queryString)
         weatherdata = JSONObject(result)
-        Log.d("Log Result", BASE_URL + queryString)
+        Log.d("LogResult", BASE_URL + queryString)
         println(weatherdata.toString())
+        //if (weatherdata.has("success") && weatherdata.getBoolean("success") == false) throw FileNotFoundException()
     }
 }

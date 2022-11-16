@@ -44,7 +44,7 @@ class ExampleUnitTest {
     @Test
     @Throws(IOException::class, JSONException::class)
     fun weatherStack_getResponseFromName() {
-        val api = WeatherStackAPI.fromLocationName("Augsburg")
+        val api = WeatherStackAPI.fromLocationName("37.422065,-122.08409")
     }
     @Test
     @Throws(IOException::class, JSONException::class)

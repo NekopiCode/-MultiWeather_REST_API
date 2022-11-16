@@ -34,21 +34,21 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 //Einsendeaufgabe Nummer 4.a                    Hier
 class MainActivity : AppCompatActivity(), LocationListener {
 
-    //Einsendeaufgabe Nummer 4.c teil 1/2
+    //Einsendeaufgabe Nummer 4.c teil 1/3
     val prefsChangedListener = object : SharedPreferences.OnSharedPreferenceChangeListener {
+        @RequiresApi(Build.VERSION_CODES.S)
         override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
             val getboolean = prefs?.getBoolean("use_gps", false)
-            if (key == "use_gps") {
                 if (getboolean == true) {
                     getLocation()
                 }
-            }
             println("prefs changed, key: $key")
-            println("$getboolean")
         }
     }
 
@@ -84,19 +84,25 @@ class MainActivity : AppCompatActivity(), LocationListener {
         val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         prefs.registerOnSharedPreferenceChangeListener(prefsChangedListener)
 
+        //Einsendeaufgabe Nummer 4.c teil 2/3
+        val getboolean = prefs.getBoolean("use_gps", false)
+        if (getboolean == true) {
+            getLocation()
+        }
+
         // Permissions
         requestPermissions(
             arrayOf<String>(
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.ACCESS_FINE_LOCATION,
                 android.Manifest.permission.ACCESS_COARSE_LOCATION
             ), 0
         )
 
+
         //onCreate End
     }
 
-    //Einsendeaufgabe Nummer 4.c teil 2/2
+    //Einsendeaufgabe Nummer 4.c teil 3/3
     private fun getLocation() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
@@ -104,11 +110,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 5f, this)
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 500f, this)
     }
 
     override fun onLocationChanged(location: Location) {
-        Log.d("GPS_In_Main", "${location.latitude}, ${location.longitude}")
+
+        Log.d("GPS In Main", "${location.latitude}, ${location.longitude}")
+        Toast.makeText(this, "${location.latitude}, ${location.longitude}", Toast.LENGTH_SHORT).show()
+
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

@@ -6,6 +6,7 @@ import and09.multiweatherapp.databinding.FragmentHomeBinding
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.location.LocationListener
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,6 +81,7 @@ class HomeFragment : Fragment() {
          */
 
         homeViewModel.retrieveWeatherData()
+
         return root
     }
 
