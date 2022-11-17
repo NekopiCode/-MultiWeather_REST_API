@@ -83,7 +83,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 val providerClassName = prefs.getString("weather_provider", "$provider")?.trim()
                 val useGPS_Status = prefs.getBoolean("use_gps", false)
 
-                //Einsendeaufgabe Nummer 4c teil 4/4
+
                 if (checkSelfPermission(
                         app,
                         Manifest.permission.ACCESS_FINE_LOCATION

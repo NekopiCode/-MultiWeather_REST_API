@@ -21,7 +21,7 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI, App
     private val weatherdata: JSONObject
 
     init {
-        //Einsendeaufgabe Nummer 3 teil 1/2
+
         setServerAddress()
         val result = HttpRequest.request(BASE_URL + queryString)
         weatherdata = JSONObject(result)
