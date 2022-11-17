@@ -21,27 +21,22 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI, App
     private val weatherdata: JSONObject
 
     init {
-        //Init Function
+        //Einsendeaufgabe Nummer 3 teil 1/2
         setServerAddress()
-
         val result = HttpRequest.request(BASE_URL + queryString)
         weatherdata = JSONObject(result)
         println(weatherdata.toString())
 
     }
 
-
     companion object {
 
         private lateinit var context: Context
-
         fun appContext(myContext: Context){
             context = myContext
         }
 
-
         private var BASE_URL = ""
-
 
         fun setServerAddress() {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -51,7 +46,6 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI, App
             Log.d("Spring_Log", "WebAPI is: $getIP")
         }
 
-
         @FromLocationName
         @Throws(IOException::class, JSONException::class)
         fun fromLocationName(locationName: String?): WeatherAPI {
@@ -59,15 +53,11 @@ class SpringWeatherAPI private constructor(queryString: String): WeatherAPI, App
                    URLEncoder.encode(locationName, "UTF-8"))
         }
 
-
-
         @Throws(IOException::class, JSONException::class)
         fun fromLatLon(lat: Double, lon: Double): WeatherAPI {
             return SpringWeatherAPI("query=$lat,$lon")
         }
-
     }
-
 
     @get:Throws(JSONException::class)
     override val temperature: Int

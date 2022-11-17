@@ -14,7 +14,7 @@ class OpenWeatherMapAPI private constructor(queryString: String) : WeatherAPI{
     private val weatherdata: JSONObject
 
     companion object {
-        private const val API_KEY = "3af8dd38306b05b4d3d04f886736f2ca"
+        private const val API_KEY = ""
         private const val BASE_URL = "https://api.openweathermap.org/data/2.5/weather?lang=de&APPID=$API_KEY&"
 
         @FromLocationName

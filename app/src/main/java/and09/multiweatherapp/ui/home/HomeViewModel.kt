@@ -10,14 +10,17 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.location.LocationManager.GPS_PROVIDER
+import android.location.LocationRequest
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.PERMISSION_DENIED
 import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.core.content.getSystemService
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -37,7 +40,6 @@ import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.hasAnnotation
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
-
 
     private val _location: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -59,22 +61,14 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         MutableLiveData<String>()
     }
 
-
     val location: LiveData<String> = _location
     val temperature: LiveData<String> = _temperature
     val description: LiveData<String> = _description
     val provider: LiveData<String> = _provider
     val iconBitmap: LiveData<Bitmap> = _iconBitmap
 
-
-    private lateinit var locationManager: LocationManager
-    private var loc: LocationListener? = null
-    private var man: LocationManager? = null
     private var lat: String = ""
     private var lon: String = ""
-
-
-
 
     @Throws(SecurityException::class)
     fun retrieveWeatherData() {
@@ -87,11 +81,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(app)
                 val locationName = prefs.getString(app.getString(R.string.location_name), "Aurich")?.trim()
                 val providerClassName = prefs.getString("weather_provider", "$provider")?.trim()
-                val ipInput = prefs.getString("pref_Key_IP_Input", "")?.trim()
                 val useGPS_Status = prefs.getBoolean("use_gps", false)
 
-                //Einsendeaufgabe Nummer 4c
-
+                //Einsendeaufgabe Nummer 4c teil 4/4
                 if (checkSelfPermission(
                         app,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -100,8 +92,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                         app,
                         Manifest.permission.ACCESS_COARSE_LOCATION
                     ) != PermissionChecker.PERMISSION_GRANTED
-                )
-                    else {
+                ) else {
                     val locationManager_retrieveWeatherData = app.getSystemService(Context.LOCATION_SERVICE) as LocationManager
                     val lastLocation = locationManager_retrieveWeatherData.getLastKnownLocation(GPS_PROVIDER)
                     lat = lastLocation?.latitude.toString()
@@ -151,14 +142,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                         else -> Log.d("Bug", "Unbekannte Fehler").toString()
                     }
                 }
-
             }
             if (weather != null)
                 updateValues(weather, bitmap)
             else Toast.makeText(getApplication(), errorMessage, Toast.LENGTH_LONG).show()
         }
-
-
     }
 
     fun updateValues(weather: WeatherAPI?, bitmap: Bitmap?) {
@@ -173,11 +161,5 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             Log.e(javaClass.simpleName, ex.toString())
         }
     }
-
-
-
-
-
-
 }
 

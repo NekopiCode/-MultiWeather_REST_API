@@ -37,12 +37,11 @@ import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-//Einsendeaufgabe Nummer 4.a                    Hier
+//Einsendeaufgabe Nummer 4.b                    Hier
 class MainActivity : AppCompatActivity(), LocationListener {
 
-    //Einsendeaufgabe Nummer 4.c teil 1/3
+    //Einsendeaufgabe Nummer 4.c teil 1/4
     val prefsChangedListener = object : SharedPreferences.OnSharedPreferenceChangeListener {
-        @RequiresApi(Build.VERSION_CODES.S)
         override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
             val getboolean = prefs?.getBoolean("use_gps", false)
                 if (getboolean == true) {
@@ -77,14 +76,14 @@ class MainActivity : AppCompatActivity(), LocationListener {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        //Initialize Context
+        //Einsendeaufgabe Nummer 3 teil 2/2
         SpringWeatherAPI.appContext(this)
 
         //Prefs. Manager Listener
         val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
         prefs.registerOnSharedPreferenceChangeListener(prefsChangedListener)
 
-        //Einsendeaufgabe Nummer 4.c teil 2/3
+        //Einsendeaufgabe Nummer 4.c teil 2/4
         val getboolean = prefs.getBoolean("use_gps", false)
         if (getboolean == true) {
             getLocation()
@@ -98,39 +97,24 @@ class MainActivity : AppCompatActivity(), LocationListener {
             ), 0
         )
 
-
         //onCreate End
     }
 
-    //Einsendeaufgabe Nummer 4.c teil 3/3
+    //Einsendeaufgabe Nummer 4.c teil 3/4
     private fun getLocation() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
         }
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 500f, this)
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 5f, this)
     }
 
     override fun onLocationChanged(location: Location) {
-
-        Log.d("GPS In Main", "${location.latitude}, ${location.longitude}")
-        Toast.makeText(this, "${location.latitude}, ${location.longitude}", Toast.LENGTH_SHORT).show()
+        Log.d("Lat_Long MainActivity", "${location.latitude}, ${location.longitude}")
+        //Toast.makeText(this, "${location.latitude}, ${location.longitude}", Toast.LENGTH_SHORT).show()
 
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == locationPermissionCode) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
 //MainActivity End
 }

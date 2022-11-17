@@ -1,7 +1,6 @@
 package and09.multiweatherapp.weatherapi
 
 import and09.multiweatherapp.HttpRequest
-import android.util.Log
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -11,10 +10,12 @@ import java.net.URLEncoder
 
 
 class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
+
     private val weatherdata: JSONObject
+
     companion object {
 
-        private const val API_KEY = "a45b0ad71e10476c6ec06a3d815bd720"
+        private const val API_KEY = ""
         private const val BASE_URL = "http://api.weatherstack.com/current?access_key=$API_KEY&"
 
         @FromLocationName
@@ -22,7 +23,6 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
         fun fromLocationName(locationName: String?): WeatherAPI {
             return WeatherStackAPI("query=" + locationName)
         }
-
 
         @Throws(IOException::class, JSONException::class)
         fun fromLatLon(lat: Double, lon: Double): WeatherAPI {
@@ -60,11 +60,9 @@ class WeatherStackAPI private constructor(queryString: String) : WeatherAPI {
     override val providerUrl: String
         get() = "https://www.weatherstack.com"
 
-
     init {
         val result = HttpRequest.request(BASE_URL + queryString)
         weatherdata = JSONObject(result)
-        Log.d("LogResult", BASE_URL + queryString)
         println(weatherdata.toString())
         //if (weatherdata.has("success") && weatherdata.getBoolean("success") == false) throw FileNotFoundException()
     }
